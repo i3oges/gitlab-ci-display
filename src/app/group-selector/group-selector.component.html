@@ -1,0 +1,5 @@
+<main>
+  <mat-card *ngFor="let group of groups | async">
+    <a [routerLink]="['/group', group.id]"> {{ group.name }}</a>
+  </mat-card>
+</main>

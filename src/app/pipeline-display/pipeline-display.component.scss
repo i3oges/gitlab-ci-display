@@ -1,0 +1,37 @@
+main {
+  text-align: center;
+  margin-top: 10px;
+}
+article {
+  background-color: rgb(151, 150, 150);
+  display: flex;
+  margin: 10px 20px;
+  border-radius: 5px;
+}
+section {
+  margin: 5px auto;
+}
+h3 {
+  color: rgb(207, 205, 205);
+}
+mat-card {
+  width: 135px;
+  margin: 4px;
+  opacity: 0.6;
+  color: black;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  &.success {
+    background-color: greenyellow;
+  }
+  &.failed {
+    background-color: brown;
+  }
+  &.pending {
+    background-color: gold;
+  }
+  &.created, &.skipped {
+    background-color: white;
+  }
+}
