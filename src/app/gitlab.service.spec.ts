@@ -61,6 +61,15 @@ describe('GitlabService', () => {
     httpMock.verify();
   });
 
+  it('should retrieve traceFile when getTraceFile is called', () => {
+    service.getTraceFile(1, 4).subscribe(traceFile => {
+      expect(traceFile).to.equal(GitlabMocks.traceFile);
+    });
+    const req = httpMock.expectOne(`${service.baseUrl}/projects/1/jobs/4/trace`);
+    req.flush(GitlabMocks.traceFile);
+    httpMock.verify();
+  });
+
   it('should combine data from projects, pipelines and jobs when getPipelineStatuses is called', () => {
     service.getPipelineStatuses(1).subscribe(jobbies => {
       expect(jobbies.stage[0]).to.equal(GitlabMocks.pipelineStatus[0].stage[0]);

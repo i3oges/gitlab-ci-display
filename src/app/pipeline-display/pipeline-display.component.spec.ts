@@ -6,6 +6,7 @@ import { GitlabServiceMock } from '../gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
 import { PipelineDisplayComponent } from './pipeline-display.component';
 import { expect } from 'chai';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PipelineDisplayComponent', () => {
   let component: PipelineDisplayComponent;
@@ -19,7 +20,7 @@ describe('PipelineDisplayComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PipelineDisplayComponent],
-      imports: [SharedModule],
+      imports: [SharedModule, RouterTestingModule],
       providers: [
         { provide: GitlabService, useClass: GitlabServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock }

@@ -34,6 +34,10 @@ export class GitlabService {
     return this.http.get<Job[]>(`${this.baseUrl}/projects/${projectId}/pipelines/${pipelineId}/jobs`, this.tokenHeader);
   }
 
+  getTraceFile(projectId: number, jobId: number) {
+    return this.http.get(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}/trace`, { ...this.tokenHeader, responseType: 'text' })
+  }
+
   getPipelineStatuses(groupId: number) {
     return this.getGroupProjects(groupId).pipe(
       switchMap(projects => from(projects)),

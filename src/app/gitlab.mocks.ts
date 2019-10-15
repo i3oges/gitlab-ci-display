@@ -316,5 +316,6 @@ export const GitlabMocks = {
     web_url: 'https://example.com/foo/bar/pipelines/47',
     created_at: '2016-08-11T11:28:34.085Z',
     updated_at: '2016-08-11T11:32:35.169Z'
-  }]
+  }],
+  traceFile: "here is some text"
 };

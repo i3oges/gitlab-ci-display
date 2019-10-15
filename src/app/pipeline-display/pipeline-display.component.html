@@ -5,7 +5,7 @@
       <section *ngFor="let stage of pipeline.stage">
         {{ stage.name }}
         <mat-card *ngFor="let job of stage.jobs" [ngClass]="job.status">
-          {{ job.name }}
+          <a [routerLink]="['/project', pipeline.project_id, 'job', job.id, 'trace']">{{ job.name }}</a>
         </mat-card>
       </section>
     </article>

@@ -15,6 +15,10 @@ h3 {
   color: rgb(207, 205, 205);
 }
 mat-card {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
   width: 135px;
   margin: 4px;
   opacity: 0.6;
