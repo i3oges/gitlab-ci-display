@@ -21,6 +21,14 @@ export class GitlabServiceMock {
     return of(GitlabMocks.jobs);
   }
 
+  public getTraceFile(projectId: number, jobId: number) {
+    return of(GitlabMocks.traceFile);
+  }
+
+  public getJobDetails(projectId: number, jobId: number) {
+    return of(GitlabMocks.job);
+  }
+
   public getPipelineStatuses(groupId: number) {
     return of(GitlabMocks.pipelineStatus);
   }

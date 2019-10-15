@@ -18,8 +18,8 @@ export class GitlabService {
 
   constructor(private http: HttpClient) { }
 
-  getGroups() {
-    return this.http.get<Group[]>(`${this.baseUrl}/groups`, this.tokenHeader);
+  getGroups(search?: string) {
+    return this.http.get<Group[]>(`${this.baseUrl}/groups${search ? `?search=${search}` : ''}`, this.tokenHeader);
   }
 
   getGroupProjects(groupId: number) {
@@ -34,6 +34,14 @@ export class GitlabService {
     return this.http.get<Job[]>(`${this.baseUrl}/projects/${projectId}/pipelines/${pipelineId}/jobs`, this.tokenHeader);
   }
 
+  getJobDetails(projectId: number, jobId: number) {
+    return this.http.get<Job>(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}`, this.tokenHeader);
+  }
+
+  getTraceFile(projectId: number, jobId: number) {
+    return this.http.get(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}/trace`, { ...this.tokenHeader, responseType: 'text' });
+  }
+
   getPipelineStatuses(groupId: number) {
     return this.getGroupProjects(groupId).pipe(
       switchMap(projects => from(projects)),
@@ -43,7 +51,8 @@ export class GitlabService {
         map(pipeline => ({
           ...pipeline,
           project_id: project.id,
-          project_name: project.name
+          project_name: project.name,
+          group_name: project.namespace.name
         }))
       )),
       mergeMap(pipeline => this.getJobs(pipeline.project_id, pipeline.id).pipe(

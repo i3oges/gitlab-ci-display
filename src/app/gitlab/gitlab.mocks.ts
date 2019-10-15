@@ -198,6 +198,7 @@ export const GitlabMocks = {
     id: 47,
     project_id: 9,
     project_name: 'Html5 Boilerplate',
+    group_name: 'Foobar Group',
     ref: 'new-pipeline',
     sha: 'a91957a858320c0e17f3a0eca7cfacbff50ea29a',
     stage: [{
@@ -316,5 +317,56 @@ export const GitlabMocks = {
     web_url: 'https://example.com/foo/bar/pipelines/47',
     created_at: '2016-08-11T11:28:34.085Z',
     updated_at: '2016-08-11T11:32:35.169Z'
-  }]
+  }],
+  traceFile: 'here is some text',
+  job: {
+    commit: {
+      author_email: 'admin@example.com',
+      author_name: 'Administrator',
+      created_at: '2015-12-24T16:51:14.000+01:00',
+      id: '0ff3ae198f8601a285adcf5c0fff204ee6fba5fd',
+      message: 'Test the CI integration.',
+      short_id: '0ff3ae19',
+      title: 'Test the CI integration.'
+    },
+    coverage: null,
+    allow_failure: false,
+    created_at: '2015-12-24T15:51:21.880Z',
+    started_at: '2015-12-24T17:54:30.733Z',
+    finished_at: '2015-12-24T17:54:31.198Z',
+    duration: 0.465,
+    artifacts_expire_at: '2016-01-23T17:54:31.198Z',
+    id: 8,
+    name: 'rubocop',
+    pipeline: {
+      id: 6,
+      ref: 'master',
+      sha: '0ff3ae198f8601a285adcf5c0fff204ee6fba5fd',
+      status: 'pending'
+    },
+    ref: 'master',
+    artifacts: [],
+    runner: null,
+    stage: 'test',
+    status: 'failed',
+    tag: false,
+    web_url: 'https://example.com/foo/bar/-/jobs/8',
+    user: {
+      id: 1,
+      name: 'Administrator',
+      username: 'root',
+      state: 'active',
+      avatar_url: 'http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon',
+      web_url: 'http://gitlab.dev/root',
+      created_at: '2015-12-21T13:14:24.077Z',
+      bio: null,
+      location: null,
+      public_email: '',
+      skype: '',
+      linkedin: '',
+      twitter: '',
+      website_url: '',
+      organization: ''
+    }
+  }
 };

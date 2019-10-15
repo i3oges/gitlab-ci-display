@@ -3,6 +3,7 @@
     "id": 9,
     "description": "foo",
     "default_branch": "master",
+    "group_name": "Experimental",
     "tag_list": [],
     "archived": false,
     "visibility": "internal",

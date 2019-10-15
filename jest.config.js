@@ -9,10 +9,11 @@ module.exports = {
   },
   "coveragePathIgnorePatterns": [
     "/node_modules/",
-    "/src/app/.+.mock.ts",
+    "/src/app/.+.mock(s)?.ts",
   ],
   "testPathIgnorePatterns": [
-    "/cypress/"
+    "/cypress/",
+    ".+.spec.js"
   ],
   "coverageThreshold": {
     "global": {

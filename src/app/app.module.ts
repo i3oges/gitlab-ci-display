@@ -8,12 +8,15 @@ import { SharedModule } from './shared/shared.module';
 import { GroupSelectorComponent } from './group-selector/group-selector.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.component';
+import { LogDisplayComponent } from './log-display/log-display.component';
+import { ToolbarService } from './shared/toolbar.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     GroupSelectorComponent,
-    PipelineDisplayComponent
+    PipelineDisplayComponent,
+    LogDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,9 @@ import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.co
     SharedModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ToolbarService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
