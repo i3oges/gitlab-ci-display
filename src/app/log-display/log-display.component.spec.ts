@@ -4,8 +4,8 @@ import { LogDisplayComponent } from './log-display.component';
 import { ActivatedRoute } from '@angular/router';
 import { expect } from 'chai';
 import { SharedModule } from '../shared/shared.module';
-import { GitlabServiceMock } from '../gitlab.service.mock';
-import { GitlabService } from '../gitlab.service';
+import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
+import { GitlabService } from '../gitlab/gitlab.service';
 
 
 describe('LogDisplayComponent', () => {
@@ -45,10 +45,10 @@ describe('LogDisplayComponent', () => {
 
   it('should get traceFile', () => {
     component.traceFile.subscribe(traceFile => {
-      expect(traceFile).to.equal("here is some text");
+      expect(traceFile).to.equal('here is some text');
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('mat-card')).to.be.ok;
-      expect(compiled.querySelector('mat-card').innerText).to.equal("here is some text");
-    })
-  })
+      expect(compiled.querySelector('mat-card').innerText).to.equal('here is some text');
+    });
+  });
 });

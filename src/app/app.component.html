@@ -1,4 +1,6 @@
 <mat-toolbar color="primary">
-  <a [routerLink]="['/']" mat-button>Pipeline Viewer</a>
+  <a [routerLink]="['/']">Pipeline Viewer</a>
+  <span *ngIf="group">&nbsp;|&nbsp;</span>
+  <span>{{ group | uppercase }}</span>
 </mat-toolbar>
 <router-outlet></router-outlet>

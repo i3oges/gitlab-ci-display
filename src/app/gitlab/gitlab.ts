@@ -14,6 +14,7 @@ export interface PipelineStatus {
   web_url: string;
   created_at: string;
   updated_at: string;
+  group_name: string;
 }
 
 // Group represents the response from GET /groups

@@ -198,6 +198,7 @@ export const GitlabMocks = {
     id: 47,
     project_id: 9,
     project_name: 'Html5 Boilerplate',
+    group_name: 'Foobar Group',
     ref: 'new-pipeline',
     sha: 'a91957a858320c0e17f3a0eca7cfacbff50ea29a',
     stage: [{
@@ -317,5 +318,5 @@ export const GitlabMocks = {
     created_at: '2016-08-11T11:28:34.085Z',
     updated_at: '2016-08-11T11:32:35.169Z'
   }],
-  traceFile: "here is some text"
+  traceFile: 'here is some text'
 };

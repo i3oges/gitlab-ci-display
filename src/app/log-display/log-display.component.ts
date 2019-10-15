@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GitlabService } from '../gitlab.service';
+import { GitlabService } from '../gitlab/gitlab.service';
 
 @Component({
   selector: 'app-log-display',
@@ -10,7 +10,7 @@ import { GitlabService } from '../gitlab.service';
 export class LogDisplayComponent implements OnInit {
   projectId = this.route.snapshot.url[1];
   jobId = this.route.snapshot.url[3];
-  traceFile = this.gs.getTraceFile(+this.projectId, +this.jobId)
+  traceFile = this.gs.getTraceFile(+this.projectId, +this.jobId);
   constructor(private route: ActivatedRoute, private gs: GitlabService) { }
 
   ngOnInit() {

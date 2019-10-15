@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { GitlabMocks } from '../gitlab.mocks';
-import { GitlabService } from '../gitlab.service';
-import { GitlabServiceMock } from '../gitlab.service.mock';
+import { GitlabMocks } from '../gitlab/gitlab.mocks';
+import { GitlabService } from '../gitlab/gitlab.service';
+import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
 import { PipelineDisplayComponent } from './pipeline-display.component';
 import { expect } from 'chai';

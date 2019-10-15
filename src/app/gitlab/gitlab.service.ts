@@ -35,7 +35,7 @@ export class GitlabService {
   }
 
   getTraceFile(projectId: number, jobId: number) {
-    return this.http.get(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}/trace`, { ...this.tokenHeader, responseType: 'text' })
+    return this.http.get(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}/trace`, { ...this.tokenHeader, responseType: 'text' });
   }
 
   getPipelineStatuses(groupId: number) {
@@ -47,7 +47,8 @@ export class GitlabService {
         map(pipeline => ({
           ...pipeline,
           project_id: project.id,
-          project_name: project.name
+          project_name: project.name,
+          group_name: project.namespace.name
         }))
       )),
       mergeMap(pipeline => this.getJobs(pipeline.project_id, pipeline.id).pipe(

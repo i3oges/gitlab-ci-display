@@ -29,7 +29,6 @@ context("Integration", () => {
 
   it('should get a trace file when clicking on a job', () => {
     cy.get('mat-card').click();
-
   });
 
 })
