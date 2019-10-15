@@ -11,7 +11,7 @@ import { from } from 'rxjs';
 export class GitlabService {
   tokenHeader = {
     headers: {
-      "PRIVATE-TOKEN": environment.gitlabPrivateToken
+      'PRIVATE-TOKEN': environment.gitlabPrivateToken
     }
   };
   baseUrl = `https://${environment.gitlabUrl}/api/v4`;
@@ -54,14 +54,14 @@ export class GitlabService {
       map(project => {
         project.jobs.forEach(job => {
           if (!project.stage.find(stage => job.stage === stage.name)) {
-            project.stage.push({ name: job.stage, jobs: [job] })
+            project.stage.push({ name: job.stage, jobs: [job] });
           } else {
-            project.stage.find(stage => job.stage === stage.name).jobs.push(job)
+            project.stage.find(stage => job.stage === stage.name).jobs.push(job);
           }
-        })
+        });
         return project;
       }),
       tap(project => delete project.jobs)
-    )
+    );
   }
 }

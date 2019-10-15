@@ -1,5 +1,4 @@
 const tsPreprocessor = require('./ts-preprocessor');
-const dotenv = require('dotenv');
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -15,10 +14,6 @@ const dotenv = require('dotenv');
 
 module.exports = (on, config) => {
   on('file:preprocessor', tsPreprocessor);
-  dotenv.config();
-  config.env.GITLAB_URL = process.env.GITLAB_URL;
-  config.env.GITLAB_PRIVATE_TOKEN = process.env.GITLAB_PRIVATE_TOKEN;
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  return config;
 }

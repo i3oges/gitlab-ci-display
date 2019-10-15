@@ -5,8 +5,8 @@ import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.co
 
 
 const routes: Routes = [
-  { path: "", component: GroupSelectorComponent },
-  { path: "group/:id", component: PipelineDisplayComponent }
+  { path: '', component: GroupSelectorComponent },
+  { path: 'group/:id', component: PipelineDisplayComponent }
 ];
 
 @NgModule({

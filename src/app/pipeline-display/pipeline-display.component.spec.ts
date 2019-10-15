@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PipelineDisplayComponent } from './pipeline-display.component';
-import { SharedModule } from '../shared/shared.module';
-import { GitlabService } from '../gitlab.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { GitlabServiceMock } from '../gitlab.service.mock';
+import { ActivatedRoute } from '@angular/router';
 import { GitlabMocks } from '../gitlab.mocks';
+import { GitlabService } from '../gitlab.service';
+import { GitlabServiceMock } from '../gitlab.service.mock';
+import { SharedModule } from '../shared/shared.module';
+import { PipelineDisplayComponent } from './pipeline-display.component';
+import { expect } from 'chai';
 
 describe('PipelineDisplayComponent', () => {
   let component: PipelineDisplayComponent;
@@ -13,9 +13,9 @@ describe('PipelineDisplayComponent', () => {
   let service: GitlabService;
   const activatedRouteMock = {
     snapshot: {
-      url: ["group", "123"]
+      url: ['group', '123']
     }
-  }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PipelineDisplayComponent],
@@ -36,10 +36,10 @@ describe('PipelineDisplayComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).to.be.ok;
   });
 
   it('should populate with pipeline job data', () => {
-    expect(component.pipelines[0][0]).toEqual(GitlabMocks.pipelineStatus[0]);
-  })
+    expect(component.pipelines[0][0]).to.equal(GitlabMocks.pipelineStatus[0]);
+  });
 });

@@ -6,6 +6,7 @@ import { GitlabService } from '../gitlab.service';
 import { GitlabServiceMock } from '../gitlab.service.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GitlabMocks } from '../gitlab.mocks';
+import { expect } from 'chai';
 
 describe('GroupSelectorComponent', () => {
   let component: GroupSelectorComponent;
@@ -31,12 +32,12 @@ describe('GroupSelectorComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).to.be.ok;
   });
 
   it('should populate with groups data', () => {
     component.groups.subscribe(groups => {
-      expect(groups).toEqual(GitlabMocks.groups);
-    })
-  })
+      expect(groups).to.equal(GitlabMocks.groups);
+    });
+  });
 });

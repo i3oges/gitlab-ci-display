@@ -92,7 +92,7 @@ export interface Job {
     message: string;
     short_id: string;
     title: string;
-  }
+  };
   coverage: number | null;
   allow_failure: boolean;
   created_at: string;
@@ -107,7 +107,7 @@ export interface Job {
     ref: string;
     sha: string;
     status: string;
-  }
+  };
   ref: string;
   artifacts: any[];
   runner: any;
@@ -131,7 +131,7 @@ export interface Job {
     twitter: string;
     website_url: string;
     organization: string;
-  }
+  };
 }
 
 export interface Pipeline {
