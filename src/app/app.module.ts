@@ -9,7 +9,7 @@ import { GroupSelectorComponent } from './group-selector/group-selector.componen
 import { HttpClientModule } from '@angular/common/http';
 import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.component';
 import { LogDisplayComponent } from './log-display/log-display.component';
-import { ToolbarService } from './toolbar.service';
+import { ToolbarService } from './shared/toolbar.service';
 
 @NgModule({
   declarations: [

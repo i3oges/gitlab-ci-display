@@ -1,12 +1,12 @@
 <main>
-  <ng-container *ngFor="let pipeline of pipelines">
-    <h3>{{ pipeline.project_name }}</h3>
+  <ng-container *ngFor="let pipeline of pipelines | async">
+    <h3 class="pipeline">{{ pipeline.project_name }}</h3>
     <article>
       <section *ngFor="let stage of pipeline.stage">
         {{ stage.name }}
         <ng-container *ngFor="let job of stage.jobs">
-          <a [routerLink]="['/project', pipeline.project_id, 'job', job.id, 'trace']">
-            <mat-card [ngClass]="job.status">
+          <a [routerLink]="['/project', pipeline.project_id, 'job', job.id, 'trace']" (click)="updateJob(job.name)">
+            <mat-card class="job-card" [ngClass]="job.status">
               {{ job.name }}
             </mat-card>
           </a>

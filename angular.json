@@ -92,11 +92,13 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json"
+              "tsconfig.spec.json",
+              "./cypress/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
-            ]
+            ],
+            "fix": true
           }
         },
         "e2e": {

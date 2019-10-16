@@ -10,6 +10,7 @@
       "title": "Test the CI integration."
     },
     "coverage": null,
+    "group_name": "Experimental",
     "allow_failure": false,
     "created_at": "2015-12-24T15:51:21.727Z",
     "started_at": "2015-12-24T17:54:24.729Z",
@@ -109,6 +110,7 @@
     "stage": "test",
     "status": "failed",
     "tag": false,
+    "group_name": "Experimental",
     "web_url": "https://example.com/foo/bar/-/jobs/7",
     "user": {
       "id": 1,

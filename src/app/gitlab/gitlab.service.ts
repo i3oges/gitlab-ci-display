@@ -18,8 +18,8 @@ export class GitlabService {
 
   constructor(private http: HttpClient) { }
 
-  getGroups() {
-    return this.http.get<Group[]>(`${this.baseUrl}/groups`, this.tokenHeader);
+  getGroups(search?: string) {
+    return this.http.get<Group[]>(`${this.baseUrl}/groups${search ? `?search=${search}` : ''}`, this.tokenHeader);
   }
 
   getGroupProjects(groupId: number) {
@@ -32,6 +32,10 @@ export class GitlabService {
 
   getJobs(projectId: number, pipelineId: number) {
     return this.http.get<Job[]>(`${this.baseUrl}/projects/${projectId}/pipelines/${pipelineId}/jobs`, this.tokenHeader);
+  }
+
+  getJobDetails(projectId: number, jobId: number) {
+    return this.http.get<Job>(`${this.baseUrl}/projects/${projectId}/jobs/${jobId}`, this.tokenHeader);
   }
 
   getTraceFile(projectId: number, jobId: number) {
