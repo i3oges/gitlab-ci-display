@@ -98,8 +98,8 @@ describe('GitlabService', () => {
 
   it('should combine data from projects, pipelines and jobs when getPipelineStatuses is called', done => {
     service.getPipelineStatuses(1).subscribe(jobbies => {
-      expect(jobbies.stage).to.have.length(GitlabMocks.pipelineStatus[0].stage.length);
-      expect(jobbies.stage[0].name).to.equal(GitlabMocks.pipelineStatus[0].stage[0].name);
+      expect(jobbies.stage).to.have.length(GitlabMocks.pipelineStatus.stage.length);
+      expect(jobbies.stage[0].name).to.equal(GitlabMocks.pipelineStatus.stage[0].name);
       done();
     });
     const projects = httpMock.expectOne(`${service.baseUrl}/groups/1/projects`);

@@ -1,3 +1,9 @@
+<mat-card class="job-details">
+  <ng-container *ngIf="(job | async) as j">
+    <mat-card-title>{{ j.commit.message }}</mat-card-title>
+    <mat-card-subtitle>{{ j.commit.author_name }}</mat-card-subtitle>
+  </ng-container>
+</mat-card>
 <mat-card class="log-card">
   <pre>
   {{ traceFile | async }}

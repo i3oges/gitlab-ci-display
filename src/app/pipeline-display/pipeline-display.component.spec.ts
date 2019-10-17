@@ -35,7 +35,7 @@ describe('PipelineDisplayComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(async () => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(PipelineDisplayComponent);
     service = TestBed.get(GitlabService);
     tbs = TestBed.get(ToolbarService);

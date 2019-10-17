@@ -194,7 +194,7 @@ export const GitlabMocks = {
       updated_at: '2016-08-12T10:09:56.223Z',
     }
   ],
-  pipelineStatus: [{
+  pipelineStatus: {
     id: 47,
     project_id: 9,
     project_name: 'Html5 Boilerplate',
@@ -317,7 +317,7 @@ export const GitlabMocks = {
     web_url: 'https://example.com/foo/bar/pipelines/47',
     created_at: '2016-08-11T11:28:34.085Z',
     updated_at: '2016-08-11T11:32:35.169Z'
-  }],
+  },
   traceFile: 'here is some text',
   job: {
     commit: {

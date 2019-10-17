@@ -17,8 +17,7 @@ export class PipelineDisplayComponent implements OnInit {
       this.ts.updateGroup(group_name);
       this.ts.updateJob('');
     }),
-    scan<PipelineStatus>((acc, cur) => [...acc, cur], []),
-    map(([ps]) => ps)
+    scan<PipelineStatus>((acc, cur) => [...acc, cur], [])
   );
   constructor(private gs: GitlabService, private route: ActivatedRoute, private ts: ToolbarService) { }
 

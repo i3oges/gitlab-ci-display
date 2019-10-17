@@ -12,12 +12,12 @@ import { ToolbarService } from '../shared/toolbar.service';
 export class LogDisplayComponent implements OnInit {
   projectId = +this.route.snapshot.url[1];
   jobId = +this.route.snapshot.url[3];
-  traceFile = this.gs.getJobDetails(this.projectId, this.jobId).pipe(
+  job = this.gs.getJobDetails(this.projectId, this.jobId).pipe(
     tap(({ name }) => {
       this.tb.updateJob(name)
-    }),
-    switchMap(() => this.gs.getTraceFile(this.projectId, this.jobId))
-  )
+    })
+  );
+  traceFile = this.gs.getTraceFile(this.projectId, this.jobId);
   constructor(private route: ActivatedRoute, private gs: GitlabService, private tb: ToolbarService) { }
 
   ngOnInit() { }
