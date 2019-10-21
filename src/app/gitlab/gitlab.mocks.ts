@@ -24,6 +24,28 @@ export const GitlabMocks = {
       parent_id: null
     }
   ],
+  group: {
+    id: 1,
+    name: 'Foobar Group',
+    path: 'foo-bar',
+    description: 'An interesting group',
+    visibility: 'public',
+    share_with_group_lock: false,
+    require_two_factor_authentication: false,
+    two_factor_grace_period: 48,
+    project_creation_level: 'developer',
+    auto_devops_enabled: null,
+    subgroup_creation_level: 'owner',
+    emails_disabled: null,
+    lfs_enabled: true,
+    avatar_url: 'http://localhost:3000/uploads/group/avatar/1/foo.jpg',
+    web_url: 'http://localhost:3000/groups/foo-bar',
+    request_access_enabled: false,
+    full_name: 'Foobar Group',
+    full_path: 'foo-bar',
+    file_template_project_id: 1,
+    parent_id: null
+  },
   groupProjects: [
     {
       id: 9,
@@ -199,6 +221,7 @@ export const GitlabMocks = {
     project_id: 9,
     project_name: 'Html5 Boilerplate',
     group_name: 'Foobar Group',
+    group_id: 5,
     ref: 'new-pipeline',
     sha: 'a91957a858320c0e17f3a0eca7cfacbff50ea29a',
     stage: [{

@@ -1,20 +1,19 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+
+interface BreadcrumbLink {
+  id: number;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolbarService {
-
-  group = new Subject<string>();
-  job = new Subject<string>();
+  breadcrumbs$: Observable<BreadcrumbLink>;
   constructor() { }
 
-  updateGroup(name: string) {
-    this.group.next(name);
-  }
+  updateBreadcrumbs(url: string[]) {
 
-  updateJob(name: string) {
-    this.job.next(name);
   }
 }

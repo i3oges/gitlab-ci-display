@@ -1,8 +1,10 @@
 <mat-toolbar color="primary">
   <a [routerLink]="['/']">Pipeline Viewer</a>
-  <span *ngIf="group">&nbsp;|&nbsp;</span>
-  <span class="group">{{ group | uppercase }}</span>
-  <span *ngIf="job">&nbsp;>&nbsp;</span>
-  <span class="job">{{ job }}</span>
+
+  <!-- <span *ngIf="group.id !== 0">&nbsp;|&nbsp;</span>
+  <a [routerLink]="['/group', group.id]"><span class="group">{{ group.name }}</span></a>
+
+  <span *ngIf="job.id !== 0">&nbsp;>&nbsp;</span>
+  <a [routerLink]="['/group', group.id]"><span class="job">{{ job.name }}</span></a> -->
 </mat-toolbar>
 <router-outlet></router-outlet>

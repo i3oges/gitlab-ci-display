@@ -33,6 +33,7 @@ context('Integration', () => {
   it('should get a trace file when clicking on a job', () => {
     cy.get('.group-card').click();
     cy.get('.job-card').first().click();
+    cy.get('.job-details').should('include.text', 'Test the CI integration.Administrator')
     cy.get('.log-card').should('include.text', 'here is some text');
   });
 });

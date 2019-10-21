@@ -47,10 +47,4 @@ describe('GroupSelectorComponent', () => {
     expect(groups).to.equal(GitlabMocks.groups);
     expect(fixture.nativeElement.textContent).to.include('Foobar Group');
   });
-
-  it('should call ToolbarService.updateGroup when updating group', () => {
-    const updateGroupSpy = chai.spy.on(toolbarService, 'updateGroup');
-    component.updateGroup('bobby');
-    expect(updateGroupSpy).to.have.been.called.with('bobby');
-  });
 });

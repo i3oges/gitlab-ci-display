@@ -12,20 +12,7 @@ describe('ToolbarService', () => {
   it('should be created', () => {
     expect(service).to.be.ok;
   });
+  it('should update breadcrumbs with just group', done => {
 
-  it('should emit group name', done => {
-    service.group.subscribe(name => {
-      expect(name).to.equal('AFTAC');
-      done();
-    });
-    service.updateGroup('AFTAC');
-  });
-
-  it('should emit job name', done => {
-    service.job.subscribe(name => {
-      expect(name).to.equal('gradle test');
-      done();
-    });
-    service.updateJob('gradle test');
-  });
+  })
 });

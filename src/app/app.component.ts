@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ToolbarService } from './shared/toolbar.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
+interface BreadcrumbLink {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -7,13 +15,15 @@ import { ToolbarService } from './shared/toolbar.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  group: string;
-  job: string;
-  constructor(private ts: ToolbarService) { }
+  breadcrumbs = [];
+  constructor(private router: Router) { }
 
-  ngOnInit() {
-    this.group = '';
-    this.ts.group.subscribe(name => this.group = name);
-    this.ts.job.subscribe(name => this.job = name);
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.router.events.subscribe(event => {
+      console.log(event);
+    })
   }
+
 }

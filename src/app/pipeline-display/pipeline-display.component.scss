@@ -1,3 +1,12 @@
+@keyframes shadow-pulse
+{
+     0% {
+          box-shadow: 0 0 0 0px rgba(255, 216, 0, 0.2);
+     }
+     100% {
+          box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+     }
+}
 main {
   text-align: center;
   margin-top: 10px;
@@ -29,7 +38,11 @@ mat-card {
     background-color: brown;
   }
   &.pending {
-    background-color: gold;
+    background-color: orange;
+  }
+  &.running {
+    background-color: rgb(255, 216, 0);
+    animation: shadow-pulse 1s infinite;
   }
   &.created, &.skipped {
     background-color: white;
