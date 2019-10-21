@@ -1,10 +1,8 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-import { concatMap, scan, tap, take, map } from 'rxjs/operators';
-import { GitlabService } from '../gitlab/gitlab.service';
-import { ToolbarService } from '../shared/toolbar.service';
+import { map, scan, tap } from 'rxjs/operators';
 import { PipelineStatus } from '../gitlab/gitlab';
+import { GitlabService } from '../gitlab/gitlab.service';
 
 @Component({
   selector: 'app-pipeline-display',
@@ -12,20 +10,25 @@ import { PipelineStatus } from '../gitlab/gitlab';
   styleUrls: ['./pipeline-display.component.scss']
 })
 export class PipelineDisplayComponent implements OnInit {
-  pipelines = this.gs.getPipelineStatuses(+this.route.snapshot.url[1]).pipe(
-    tap(({ group_name }) => {
-      this.ts.updateGroup(group_name);
-      this.ts.updateJob('');
-    }),
-    scan<PipelineStatus>((acc, cur) => [...acc, cur], [])
+  groupId = +this.route.snapshot.url[1];
+  pipelines = this.gs.getPipelineStatuses(this.groupId).pipe(
+    scan<PipelineStatus>((acc, cur) => {
+      const index = acc.findIndex(p => p.project_id === cur.project_id);
+      if (index !== -1) {
+        if (acc[index].status !== cur.status) {
+          acc[index] = cur;
+        }
+      } else {
+        acc.push(cur);
+      }
+      return acc;
+    }, []),
+    map(ps => ps.sort()),
   );
-  constructor(private gs: GitlabService, private route: ActivatedRoute, private ts: ToolbarService) { }
+  constructor(private gs: GitlabService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-  }
 
-  updateJob = (name: string) => {
-    this.ts.updateJob(name);
   }
 
 }

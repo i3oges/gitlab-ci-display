@@ -7,8 +7,8 @@ import { LogDisplayComponent } from './log-display/log-display.component';
 
 const routes: Routes = [
   { path: '', component: GroupSelectorComponent },
-  { path: 'group/:id', component: PipelineDisplayComponent },
-  { path: 'project/:projectId/job/:jobId/trace', component: LogDisplayComponent }
+  { path: 'group/:groupId', component: PipelineDisplayComponent },
+  { path: 'group/:groupId/project/:projectId/job/:jobId', component: LogDisplayComponent }
 ];
 
 @NgModule({

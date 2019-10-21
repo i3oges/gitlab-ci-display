@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GitlabService } from '../gitlab/gitlab.service';
-import { ToolbarService } from '../shared/toolbar.service';
 
 @Component({
   selector: 'app-group-selector',
@@ -9,15 +8,9 @@ import { ToolbarService } from '../shared/toolbar.service';
 })
 export class GroupSelectorComponent implements OnInit {
   groups = this.gs.getGroups();
-  constructor(private gs: GitlabService, private tb: ToolbarService) {
-    this.tb.updateGroup('');
-    this.tb.updateJob('');
-  }
+  constructor(private gs: GitlabService) { }
 
   ngOnInit() {
   }
 
-  updateGroup(name: string) {
-    this.tb.updateGroup(name);
-  }
 }

@@ -17,7 +17,7 @@ describe('GitlabService', () => {
   });
 
   beforeEach(
-    inject([GitlabService, HttpTestingController], (svc, mock) => {
+    inject([GitlabService, HttpTestingController], (svc: GitlabService, mock: HttpTestingController) => {
       service = svc;
       httpMock = mock;
       service.baseUrl = 'gitlab.com';
@@ -45,6 +45,16 @@ describe('GitlabService', () => {
     httpMock.verify();
   });
 
+  it('should get a single group when getGroup is called', done => {
+    service.getGroup(1).subscribe(group => {
+      expect(group).to.equal(GitlabMocks.group);
+      done();
+    });
+    const req = httpMock.expectOne(`${service.baseUrl}/groups/1`);
+    req.flush(GitlabMocks.group);
+    httpMock.verify();
+  });
+
   it('should retrieve projects when getGroupProjects is called', done => {
     service.getGroupProjects(12).subscribe(projects => {
       expect(projects).to.equal(GitlabMocks.groupProjects);
@@ -54,6 +64,16 @@ describe('GitlabService', () => {
     req.flush(GitlabMocks.groupProjects);
     httpMock.verify();
   });
+
+  it('should retrieve single project when getProject is called', done => {
+    service.getProject(3).subscribe(project => {
+      expect(project).to.equal(GitlabMocks.project);
+      done();
+    })
+    const req = httpMock.expectOne(`${service.baseUrl}/projects/3`);
+    req.flush(GitlabMocks.project);
+    httpMock.verify();
+  })
 
   it('should retrieve pipelines when getPipelines is called', done => {
     service.getPipelines(12).subscribe(pipelines => {

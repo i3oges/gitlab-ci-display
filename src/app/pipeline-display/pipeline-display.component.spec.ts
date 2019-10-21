@@ -1,20 +1,19 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from 'chai';
-import { GitlabMocks } from '../gitlab/gitlab.mocks';
 import { GitlabService } from '../gitlab/gitlab.service';
 import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
-import { ToolbarService } from '../shared/toolbar.service';
-import { ToolbarServiceMock } from '../shared/toolbar.service.mock';
 import { PipelineDisplayComponent } from './pipeline-display.component';
+import { GitlabMocks } from '../gitlab/gitlab.mocks';
+import { of } from 'rxjs';
+
 
 describe('PipelineDisplayComponent', () => {
   let component: PipelineDisplayComponent;
   let fixture: ComponentFixture<PipelineDisplayComponent>;
   let service: GitlabService;
-  let tbs: ToolbarService;
   let jobs: any;
   const activatedRouteMock = {
     snapshot: {
@@ -28,7 +27,6 @@ describe('PipelineDisplayComponent', () => {
       providers: [
         { provide: GitlabService, useClass: GitlabServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: ToolbarService, useClass: ToolbarServiceMock },
         { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
     })
@@ -38,7 +36,6 @@ describe('PipelineDisplayComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PipelineDisplayComponent);
     service = TestBed.get(GitlabService);
-    tbs = TestBed.get(ToolbarService);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -48,15 +45,29 @@ describe('PipelineDisplayComponent', () => {
     expect(component).to.be.ok;
   });
 
-  it('should call service when updateJob runs', async () => {
-    component.updateJob('');
-    const job = await tbs.job.toPromise();
-    expect(job).to.equal('test job'); // returned by ...mock.ts
-  });
-
   it('should populate with pipeline job data', () => {
     jobs = fixture.nativeElement.textContent;
     expect(jobs).to.contain('rspec:other');
     expect(jobs).to.contain('teaspoon');
   });
+
+  it('should update jobs when status changes', async () => {
+    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatus))
+    fixture = TestBed.createComponent(PipelineDisplayComponent);
+    component = fixture.componentInstance;
+
+    const [firstPipelineCheck] = await component.pipelines.toPromise();
+    expect(firstPipelineCheck.stage[0].jobs).to.have.length(2);
+    expect(firstPipelineCheck.stage[0].jobs[1].status).to.equal('running');
+    expect(firstPipelineCheck.stage[0].jobs[1]).to.equal(GitlabMocks.pipelineStatus.stage[0].jobs[1]);
+
+    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatusDifferentStatuses));
+    fixture = TestBed.createComponent(PipelineDisplayComponent);
+    component = fixture.componentInstance;
+
+    const [secondPipelineCheck] = await component.pipelines.toPromise();
+    expect(secondPipelineCheck.stage[0].jobs).to.have.length(2);
+    expect(secondPipelineCheck.stage[0].jobs[1].status).to.equal('passed');
+    expect(secondPipelineCheck).to.equal(GitlabMocks.pipelineStatusDifferentStatuses);
+  })
 });

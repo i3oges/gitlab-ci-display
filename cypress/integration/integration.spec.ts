@@ -27,12 +27,12 @@ context('Integration', () => {
     cy.get('.group-card').click();
     cy.get('.job-card').should('have.length', 2).and('include.text', 'rspec:other').and('include.text', 'teaspoon');
     cy.get('.pipeline').should('have.text', 'Html5 Boilerplate');
-    cy.get('.group').should('have.text', 'EXPERIMENTAL');
   });
 
   it('should get a trace file when clicking on a job', () => {
     cy.get('.group-card').click();
     cy.get('.job-card').first().click();
+    cy.get('.job-details').should('include.text', 'Test the CI integration.Administrator');
     cy.get('.log-card').should('include.text', 'here is some text');
   });
 });

@@ -1,0 +1,56 @@
+image: "node:latest"
+
+stages:
+  - test
+  - integration
+  - build
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - .cache
+
+before_script:
+  - cp .env.example .env
+  - npm ci
+
+test:
+  stage: test
+  tags:
+    - gitlab-org
+  script:
+    - npm run test:ci
+
+lint:
+  stage: test
+  tags:
+    - gitlab-org
+  script:
+    - npm run lint
+
+coverage:
+  stage: test
+  tags:
+    - gitlab-org
+  script:
+    - npm run test:coverage
+
+e2e:
+  stage: integration
+  tags:
+    - gitlab-org
+  image: cypress/base:10
+  script:
+    - npm run e2e
+
+
+build:
+  stage: build
+  tags:
+    - gitlab-org
+  script:
+    - npm run build --prod
+  artifacts:
+    paths:
+      - dist

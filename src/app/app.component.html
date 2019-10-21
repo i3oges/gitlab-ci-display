@@ -1,8 +1,14 @@
 <mat-toolbar color="primary">
-  <a [routerLink]="['/']">Pipeline Viewer</a>
-  <span *ngIf="group">&nbsp;|&nbsp;</span>
-  <span class="group">{{ group | uppercase }}</span>
-  <span *ngIf="job">&nbsp;>&nbsp;</span>
-  <span class="job">{{ job }}</span>
+  <a class="home" [routerLink]="['/']">Pipeline Viewer</a>
+  <ng-container *ngFor="let bc of breadcrumbs | async">
+    <ng-container *ngIf="bc.name">
+      <span *ngIf="bc.url; else nourl">
+        <a class="breadcrumb" [routerLink]="[bc.url]">&#160;/ {{ bc.name }}</a>
+      </span>
+      <ng-template #nourl>
+        <span class="breadcrumb-no-link">&#160;/ {{ bc.name }}</span>
+      </ng-template>
+    </ng-container>
+  </ng-container>
 </mat-toolbar>
 <router-outlet></router-outlet>
