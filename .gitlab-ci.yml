@@ -2,6 +2,7 @@ image: "node:latest"
 
 stages:
   - test
+  - integration
   - build
 
 cache:
@@ -21,20 +22,28 @@ test:
   script:
     - npm run test:ci
 
-e2e:
-  stage: test
-  tags:
-    - gitlab-org
-  image: cypress/base:10
-  script:
-    - npm run e2e
-
 lint:
   stage: test
   tags:
     - gitlab-org
   script:
     - npm run lint
+
+coverage:
+  stage: test
+  tags:
+    - gitlab-org
+  script:
+    - npm run test:coverage
+
+e2e:
+  stage: integration
+  tags:
+    - gitlab-org
+  image: cypress/base:10
+  script:
+    - npm run e2e
+
 
 build:
   stage: build

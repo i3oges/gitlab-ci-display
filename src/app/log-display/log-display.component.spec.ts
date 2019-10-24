@@ -48,7 +48,7 @@ describe('LogDisplayComponent', () => {
   it('should get some info about the job', () => {
     const jobDetailsCard = fixture.debugElement.query(By.css('.job-details')).nativeElement.textContent.trim();
     expect(jobDetailsCard).to.equal('Test the CI integration.Administrator');
-  })
+  });
 
   it('should get traceFile', async () => {
     const traceFile = await component.traceFile.toPromise();

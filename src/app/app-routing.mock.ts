@@ -2,16 +2,16 @@ import { Routes } from '@angular/router';
 import { Component } from '@angular/core';
 
 @Component({ template: 'Log' })
-export class LogComponentMock { }
+export class MockLogComponent { }
 
 @Component({ template: 'Group' })
-export class GroupComponentMock { }
+export class MockGroupComponent { }
 
 @Component({ template: `<router-outlet></router-outlet>` })
-export class AppComponentMock { }
+export class MockAppComponent { }
 
 export const routes: Routes = [
-  { path: '', component: AppComponentMock },
-  { path: 'group/:groupId', component: GroupComponentMock },
-  { path: 'group/:groupId/project/:projectId/job/:jobId', component: LogComponentMock }
+  { path: '', component: MockAppComponent },
+  { path: 'group/:groupId', component: MockGroupComponent },
+  { path: 'group/:groupId/project/:projectId/job/:jobId', component: MockLogComponent }
 ];

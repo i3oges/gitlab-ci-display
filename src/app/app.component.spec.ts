@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from 'chai';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { AppComponentMock, GroupComponentMock, LogComponentMock, routes } from './app-routing.mock';
+import { MockAppComponent, MockGroupComponent, MockLogComponent, routes } from './app-routing.mock';
 import { Router } from '@angular/router';
 import { GitlabService } from './gitlab/gitlab.service';
 import { GitlabServiceMock } from './gitlab/gitlab.service.mock';
@@ -29,9 +29,9 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        AppComponentMock,
-        GroupComponentMock,
-        LogComponentMock
+        MockAppComponent,
+        MockGroupComponent,
+        MockLogComponent
       ]
     }).compileComponents();
     router = TestBed.get(Router);

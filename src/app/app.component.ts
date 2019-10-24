@@ -10,15 +10,15 @@ import { GitlabService } from './gitlab/gitlab.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  breadcrumbs = this.getBreadcrumbs();
   constructor(private router: Router, private gs: GitlabService) { }
-
-  ngOnInit(): void {
-  }
+  breadcrumbs = this.getBreadcrumbs();
 
   mapNameAndId = map(({ name, id }) => ({
     name, id
   }));
+
+  ngOnInit(): void {
+  }
 
   getBreadcrumbs() {
     return this.router.events.pipe(
@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
         if (groupId) {
           obs.push(this.gs.getGroup(+groupId).pipe(
             map(elm => {
-              const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/')
-              return { ...elm, url }
+              const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/');
+              return { ...elm, url };
             })
           ));
         }
@@ -41,18 +41,18 @@ export class AppComponent implements OnInit {
           if (jobId) {
             obs.push(this.gs.getJobDetails(+projectId, +jobId).pipe(
               map(elm => {
-                const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/')
-                return { ...elm, url }
+                const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/');
+                return { ...elm, url };
               })
             ));
           }
         }
         if (obs.length === 0) {
-          obs.push(of([]))
+          obs.push(of([]));
         }
-        return forkJoin(obs)
+        return forkJoin(obs);
       })
-    )
+    );
   }
 
 }

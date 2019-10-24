@@ -49,11 +49,11 @@ describe('GitlabService', () => {
     service.getGroup(1).subscribe(group => {
       expect(group).to.equal(GitlabMocks.group);
       done();
-    })
+    });
     const req = httpMock.expectOne(`${service.baseUrl}/groups/1`);
     req.flush(GitlabMocks.group);
     httpMock.verify();
-  })
+  });
 
   it('should retrieve projects when getGroupProjects is called', done => {
     service.getGroupProjects(12).subscribe(projects => {

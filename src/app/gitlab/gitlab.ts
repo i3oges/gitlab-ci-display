@@ -250,5 +250,5 @@ export interface Project {
     labels: string;
     events: string;
     members: string;
-  }
+  };
 }
