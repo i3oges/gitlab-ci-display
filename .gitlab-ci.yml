@@ -8,4 +8,4 @@ test:
   tags:
     - gitlab-org
   script:
-    - ng test
+    - npm run test:ci
