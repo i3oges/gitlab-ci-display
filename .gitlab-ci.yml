@@ -1,5 +1,7 @@
 image: "node:latest"
 
 test:
+  tags:
+    - gitlab-org
   script:
     - ng test
