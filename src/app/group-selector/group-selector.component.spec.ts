@@ -7,7 +7,6 @@ import { GitlabMocks } from '../gitlab/gitlab.mocks';
 import { GitlabService } from '../gitlab/gitlab.service';
 import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
-import { ToolbarService } from '../shared/toolbar.service';
 import { GroupSelectorComponent } from './group-selector.component';
 
 
@@ -17,7 +16,6 @@ describe('GroupSelectorComponent', () => {
   let component: GroupSelectorComponent;
   let fixture: ComponentFixture<GroupSelectorComponent>;
   let gitlabService: GitlabService;
-  let toolbarService: ToolbarService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +31,6 @@ describe('GroupSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupSelectorComponent);
     gitlabService = TestBed.get(GitlabService);
-    toolbarService = TestBed.get(ToolbarService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

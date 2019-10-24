@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { delay, map, mergeMap, repeat, switchMap, take, tap, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Group, GroupProject, Job, Pipeline } from './gitlab';
+import { Group, GroupProject, Job, Pipeline, Project } from './gitlab';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,10 @@ export class GitlabService {
 
   getGroupProjects(groupId: number) {
     return this.http.get<GroupProject[]>(`${this.baseUrl}/groups/${groupId}/projects`, this.tokenHeader);
+  }
+
+  getProject(projectId: number) {
+    return this.http.get<Project>(`${this.baseUrl}/projects/${projectId}`, this.tokenHeader);
   }
 
   getPipelines(projectId: number) {
@@ -58,7 +62,9 @@ export class GitlabService {
           project_name: project.name,
           group_name: project.namespace.name,
           group_id: project.namespace.id
-        }))
+        })),
+        // delay(5000),
+        // repeat()
       )),
       mergeMap(pipeline => this.getJobs(pipeline.project_id, pipeline.id).pipe(
         map(jobs => ({

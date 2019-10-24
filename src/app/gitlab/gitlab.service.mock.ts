@@ -9,6 +9,10 @@ export class GitlabServiceMock {
     return of(GitlabMocks.groups);
   }
 
+  public getGroup(groupId: number) {
+    return of(GitlabMocks.group);
+  }
+
   public getGroupProjects(groupId: number) {
     return of(GitlabMocks.groupProjects);
   }

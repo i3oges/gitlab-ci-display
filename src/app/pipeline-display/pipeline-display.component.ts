@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { map, scan, tap } from 'rxjs/operators';
 import { PipelineStatus } from '../gitlab/gitlab';
 import { GitlabService } from '../gitlab/gitlab.service';
-import { ToolbarService } from '../shared/toolbar.service';
 
 @Component({
   selector: 'app-pipeline-display',
@@ -26,7 +25,7 @@ export class PipelineDisplayComponent implements OnInit {
     }, []),
     map(ps => ps.sort()),
   );
-  constructor(private gs: GitlabService, private route: ActivatedRoute, private ts: ToolbarService) { }
+  constructor(private gs: GitlabService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
