@@ -9,3 +9,18 @@ test:
     - gitlab-org
   script:
     - npm run test:ci
+
+e2e:
+  tags:
+    - gitlab-org
+  script:
+    - npm run e2e
+
+build:
+  tags:
+    - gitlab-org
+  script:
+    - npm run build --prod
+  artifacts:
+    paths:
+      - dist
