@@ -1,22 +1,30 @@
 image: "node:latest"
 
+stages:
+  - test
+  - build
+
 before_script:
   - cp .env.example .env
-  - npm install
+  - npm ci
 
 test:
+  stage: test
   tags:
     - gitlab-org
   script:
     - npm run test:ci
 
 e2e:
+  stage: test
   tags:
     - gitlab-org
   script:
+    - apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
     - npm run e2e
 
 build:
+  stage: build
   tags:
     - gitlab-org
   script:
