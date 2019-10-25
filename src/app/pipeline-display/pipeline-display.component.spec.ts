@@ -59,7 +59,7 @@ describe('PipelineDisplayComponent', () => {
     const [firstPipelineCheck] = await component.pipelines.toPromise();
     expect(firstPipelineCheck.stage[0].jobs).to.have.length(2);
     expect(firstPipelineCheck.stage[0].jobs[1].status).to.equal('running');
-    expect(firstPipelineCheck.stage[0].jobs[1]).to.equal(GitlabMocks.pipelineStatus.stage[0].jobs[1]);
+    expect(firstPipelineCheck).to.equal(GitlabMocks.pipelineStatus);
 
     service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatusDifferentStatuses));
     fixture = TestBed.createComponent(PipelineDisplayComponent);

@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NgZone } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ describe('AppComponent', () => {
   let router: Router;
   let location: Location;
   let gitlabService: GitlabService;
+  let zone: NgZone;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,10 +38,9 @@ describe('AppComponent', () => {
     router = TestBed.get(Router);
     location = TestBed.get(Location);
     gitlabService = TestBed.get(GitlabService);
-
+    zone = new NgZone({ enableLongStackTrace: false });
     fixture = TestBed.createComponent(AppComponent);
 
-    router.initialNavigation();
     toolbar = fixture.debugElement.query(By.css('mat-toolbar'));
     fixture.detectChanges();
   }));
@@ -56,7 +56,7 @@ describe('AppComponent', () => {
   });
 
   it('should navigate to group with an id', fakeAsync(() => {
-    router.navigate(['group', 1]);
+    zone.run(() => router.navigate(['group', 1]));
     tick();
     expect(location.path()).to.equal('/group/1');
     fixture.detectChanges();
@@ -64,9 +64,16 @@ describe('AppComponent', () => {
     expect(elm.query(By.css('.breadcrumb')).nativeElement.textContent.trim()).to.equal('/ Foobar Group');
   }));
 
+  it('should not be able to navigate with just group and project', fakeAsync(() => {
+    zone.run(() => router.navigate(['group', 1, 'project', 3])).catch(err => {
+      expect(err).to.be.ok;
+      expect(location.path()).to.equal('/');
+    });
+  }))
+
   it('should navigate to job with group, project and job id', fakeAsync(() => {
     const completeWithBreadcrumbs = 'Pipeline Viewer / Foobar Group / Diaspora Project Site / rubocop';
-    router.navigate(['group', 1, 'project', 3, 'job', 8]);
+    zone.run(() => router.navigate(['group', 1, 'project', 3, 'job', 8]));
     tick()
     expect(location.path()).to.equal('/group/1/project/3/job/8');
     fixture.detectChanges();
