@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Integration', () => {
+context('UserWithGroup', () => {
   beforeEach(() => {
     cy.fixture('groups').as('groupsStub');
     cy.fixture('groupProjects').as('groupProjectsStub');

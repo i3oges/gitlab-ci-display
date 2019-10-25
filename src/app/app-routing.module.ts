@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { GroupSelectorComponent } from './group-selector/group-selector.component';
-import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { LogDisplayComponent } from './log-display/log-display.component';
+import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.component';
 
 
 const routes: Routes = [
-  { path: '', component: GroupSelectorComponent },
+  { path: '', component: HomeComponent },
   { path: 'group/:groupId', component: PipelineDisplayComponent },
   { path: 'group/:groupId/project/:projectId/job/:jobId', component: LogDisplayComponent },
+  { path: 'projects', component: PipelineDisplayComponent },
+  { path: 'project/:projectId/job/:jobId', component: LogDisplayComponent },
   { path: '**', redirectTo: '' }
 ];
 

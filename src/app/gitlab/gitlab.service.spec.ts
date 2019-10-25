@@ -1,12 +1,14 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
-import { GitlabMocks } from './gitlab.mocks';
-import { GitlabService } from './gitlab.service';
 import { expect } from 'chai';
+import { TestScheduler } from 'rxjs/testing';
+import { GitlabMocks } from '../testing/gitlab.mocks';
+import { GitlabService } from './gitlab.service';
 
 describe('GitlabService', () => {
   let service: GitlabService;
   let httpMock: HttpTestingController;
+  let scheduler: TestScheduler;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -24,6 +26,10 @@ describe('GitlabService', () => {
       service.tokenHeader = { headers: { 'PRIVATE-TOKEN': '12345' } };
     })
   );
+
+  beforeEach(() => scheduler = new TestScheduler((actual, expected) => {
+    expect(actual).deep.equal(expected);
+  }));
 
   it('should retrieve groups when getGroups is called', done => {
     service.getGroups().subscribe(([group]) => {
@@ -62,6 +68,17 @@ describe('GitlabService', () => {
     });
     const req = httpMock.expectOne(`${service.baseUrl}/groups/12/projects`);
     req.flush(GitlabMocks.groupProjects);
+    httpMock.verify();
+  });
+
+  it('should retrieve simplified projects that you are a member of when getProjects is called', done => {
+    service.getProjects().subscribe(projects => {
+      expect(projects).to.equal(GitlabMocks.projects);
+      done();
+    });
+
+    const req = httpMock.expectOne(`${service.baseUrl}/projects?membership=true&simple=true`);
+    req.flush(GitlabMocks.projects);
     httpMock.verify();
   });
 
@@ -117,13 +134,30 @@ describe('GitlabService', () => {
   });
 
   it('should combine data from projects, pipelines and jobs when getPipelineStatuses is called', done => {
-    service.getPipelineStatuses(1).subscribe(jobbies => {
-      expect(jobbies.stage).to.have.length(GitlabMocks.pipelineStatus.stage.length);
-      expect(jobbies.stage[0].name).to.equal(GitlabMocks.pipelineStatus.stage[0].name);
+    service.getPipelineStatuses(1).subscribe(([jobbies]) => {
+      expect(jobbies.stage).to.have.length(GitlabMocks.pipelineStatus[0].stage.length);
+      expect(jobbies.stage[0].name).to.equal(GitlabMocks.pipelineStatus[0].stage[0].name);
       done();
     });
+
     const projects = httpMock.expectOne(`${service.baseUrl}/groups/1/projects`);
     projects.flush(GitlabMocks.groupProjects);
+    const pipelines = httpMock.expectOne(`${service.baseUrl}/projects/9/pipelines`);
+    pipelines.flush(GitlabMocks.pipelines);
+    const jobs = httpMock.expectOne(`${service.baseUrl}/projects/9/pipelines/47/jobs`);
+    jobs.flush(GitlabMocks.jobs);
+    httpMock.verify();
+  });
+
+  it('should combine data from projects pipelines and jobs when getMemebershipPipelineStatuses is used', done => {
+    service.getMembershipPipelineStatus().subscribe(([jobbies]) => {
+      expect(jobbies.stage).to.have.length(GitlabMocks.pipelineStatus[0].stage.length);
+      expect(jobbies.stage[0].name).to.equal(GitlabMocks.pipelineStatus[0].stage[0].name);
+      done();
+    });
+
+    const projects = httpMock.expectOne(`${service.baseUrl}/projects?membership=true&simple=true`);
+    projects.flush(GitlabMocks.projects);
     const pipelines = httpMock.expectOne(`${service.baseUrl}/projects/9/pipelines`);
     pipelines.flush(GitlabMocks.pipelines);
     const jobs = httpMock.expectOne(`${service.baseUrl}/projects/9/pipelines/47/jobs`);

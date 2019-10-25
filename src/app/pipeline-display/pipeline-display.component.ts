@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, scan, tap } from 'rxjs/operators';
-import { PipelineStatus } from '../gitlab/gitlab';
+import { mergeMap } from 'rxjs/operators';
 import { GitlabService } from '../gitlab/gitlab.service';
 
 @Component({
@@ -9,26 +8,17 @@ import { GitlabService } from '../gitlab/gitlab.service';
   templateUrl: './pipeline-display.component.html',
   styleUrls: ['./pipeline-display.component.scss']
 })
-export class PipelineDisplayComponent implements OnInit {
-  groupId = +this.route.snapshot.url[1];
-  pipelines = this.gs.getPipelineStatuses(this.groupId).pipe(
-    scan<PipelineStatus>((acc, cur) => {
-      const index = acc.findIndex(p => p.project_id === cur.project_id);
-      if (index !== -1) {
-        if (acc[index].status !== cur.status) {
-          acc[index] = cur;
-        }
+export class PipelineDisplayComponent {
+  groupId: number;
+  pipelines = this.route.params.pipe(
+    mergeMap(params => {
+      if (params.groupId) {
+        this.groupId = params.groupId;
+        return this.gs.getPipelineStatuses(+params.groupId);
       } else {
-        acc.push(cur);
+        return this.gs.getMembershipPipelineStatus();
       }
-      return acc;
-    }, []),
-    map(ps => ps.sort()),
+    })
   );
   constructor(private gs: GitlabService, private route: ActivatedRoute) { }
-
-  ngOnInit() {
-
-  }
-
 }

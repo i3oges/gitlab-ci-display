@@ -14,10 +14,6 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private gs: GitlabService) { }
   breadcrumbs = this.getBreadcrumbs();
 
-  mapNameAndId = map(({ name, id }) => ({
-    name, id
-  }));
-
   ngOnInit(): void {
   }
 
@@ -25,7 +21,7 @@ export class AppComponent implements OnInit {
     return this.router.events.pipe(
       filter(event => event instanceof ActivationEnd),
       pluck<ActivationEnd, ActivatedRouteSnapshot>('snapshot'),
-      mergeMap(snap => {
+      mergeMap((snap: ActivatedRouteSnapshot) => {
         const { groupId, projectId, jobId } = snap.params;
         const { url: snapUrl } = snap;
         const obs: Observable<any>[] = [];
