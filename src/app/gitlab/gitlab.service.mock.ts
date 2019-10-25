@@ -17,6 +17,10 @@ export class GitlabServiceMock {
     return of(GitlabMocks.groupProjects);
   }
 
+  public getProject(projectId: number) {
+    return of(GitlabMocks.project);
+  }
+
   public getPipelines(projectId: number) {
     return of(GitlabMocks.pipelines);
   }

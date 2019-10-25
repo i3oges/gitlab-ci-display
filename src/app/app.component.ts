@@ -38,14 +38,12 @@ export class AppComponent implements OnInit {
         }
         if (projectId) {
           obs.push(this.gs.getProject(+projectId));
-          if (jobId) {
-            obs.push(this.gs.getJobDetails(+projectId, +jobId).pipe(
-              map(elm => {
-                const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/');
-                return { ...elm, url };
-              })
-            ));
-          }
+          obs.push(this.gs.getJobDetails(+projectId, +jobId).pipe(
+            map(elm => {
+              const url = snapUrl.slice(0, snapUrl.findIndex(u => +u.path === elm.id) + 1).join('/');
+              return { ...elm, url };
+            })
+          ));
         }
         if (obs.length === 0) {
           obs.push(of([]));

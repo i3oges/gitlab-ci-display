@@ -1,12 +1,12 @@
 <mat-toolbar color="primary">
-  <a [routerLink]="['/']">Pipeline Viewer</a>
+  <a class="home" [routerLink]="['/']">Pipeline Viewer</a>
   <ng-container *ngFor="let bc of breadcrumbs | async">
     <ng-container *ngIf="bc.name">
       <span *ngIf="bc.url; else nourl">
-        <a [routerLink]="[bc.url]">&nbsp;/ {{ bc.name }}</a>
+        <a class="breadcrumb" [routerLink]="[bc.url]">&#160;/ {{ bc.name }}</a>
       </span>
       <ng-template #nourl>
-        <span>&nbsp;/ {{ bc.name }}</span>
+        <span class="breadcrumb-no-link">&#160;/ {{ bc.name }}</span>
       </ng-template>
     </ng-container>
   </ng-container>
