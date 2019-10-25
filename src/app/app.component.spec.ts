@@ -69,12 +69,12 @@ describe('AppComponent', () => {
       expect(err).to.be.ok;
       expect(location.path()).to.equal('/');
     });
-  }))
+  }));
 
   it('should navigate to job with group, project and job id', fakeAsync(() => {
     const completeWithBreadcrumbs = 'Pipeline Viewer / Foobar Group / Diaspora Project Site / rubocop';
     zone.run(() => router.navigate(['group', 1, 'project', 3, 'job', 8]));
-    tick()
+    tick();
     expect(location.path()).to.equal('/group/1/project/3/job/8');
     fixture.detectChanges();
 

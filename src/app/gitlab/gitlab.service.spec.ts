@@ -69,11 +69,11 @@ describe('GitlabService', () => {
     service.getProject(3).subscribe(project => {
       expect(project).to.equal(GitlabMocks.project);
       done();
-    })
+    });
     const req = httpMock.expectOne(`${service.baseUrl}/projects/3`);
     req.flush(GitlabMocks.project);
     httpMock.verify();
-  })
+  });
 
   it('should retrieve pipelines when getPipelines is called', done => {
     service.getPipelines(12).subscribe(pipelines => {

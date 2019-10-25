@@ -30,10 +30,10 @@ export class AppComponent implements OnInit {
         const { url: snapUrl } = snap;
         const obs: Observable<any>[] = [];
         const makeUrl = (elm: Group | Project | Job) => {
-          const idIndex = snapUrl.findIndex(u => +u.path === elm.id) + 1
+          const idIndex = snapUrl.findIndex(u => +u.path === elm.id) + 1;
           const url = snapUrl.slice(0, idIndex).join('/');
           return { ...elm, url };
-        }
+        };
         if (groupId) {
           obs.push(this.gs.getGroup(+groupId).pipe(
             map(makeUrl)

@@ -52,7 +52,7 @@ describe('PipelineDisplayComponent', () => {
   });
 
   it('should update jobs when status changes', async () => {
-    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatus))
+    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatus));
     fixture = TestBed.createComponent(PipelineDisplayComponent);
     component = fixture.componentInstance;
 
@@ -69,5 +69,5 @@ describe('PipelineDisplayComponent', () => {
     expect(secondPipelineCheck.stage[0].jobs).to.have.length(2);
     expect(secondPipelineCheck.stage[0].jobs[1].status).to.equal('passed');
     expect(secondPipelineCheck).to.equal(GitlabMocks.pipelineStatusDifferentStatuses);
-  })
+  });
 });
