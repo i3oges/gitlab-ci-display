@@ -9,13 +9,15 @@ import { GroupSelectorComponent } from './group-selector/group-selector.componen
 import { HttpClientModule } from '@angular/common/http';
 import { PipelineDisplayComponent } from './pipeline-display/pipeline-display.component';
 import { LogDisplayComponent } from './log-display/log-display.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GroupSelectorComponent,
     PipelineDisplayComponent,
-    LogDisplayComponent
+    LogDisplayComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

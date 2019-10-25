@@ -1,15 +1,23 @@
 import { Location } from '@angular/common';
-import { DebugElement, NgZone } from '@angular/core';
+import { DebugElement, NgZone, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from 'chai';
-import { MockAppComponent, MockGroupComponent, MockLogComponent, routes } from './app-routing.mock';
 import { AppComponent } from './app.component';
 import { GitlabService } from './gitlab/gitlab.service';
-import { GitlabServiceMock } from './gitlab/gitlab.service.mock';
+import { GitlabServiceMock } from './testing/gitlab.service.mock';
 import { SharedModule } from './shared/shared.module';
+
+@Component({ template: 'Log' })
+class MockLogComponent { }
+
+@Component({ template: 'Group' })
+class MockGroupComponent { }
+
+@Component({ template: `<router-outlet></router-outlet>` })
+class MockAppComponent { }
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -22,7 +30,11 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
+        RouterTestingModule.withRoutes([
+          { path: '', component: MockAppComponent },
+          { path: 'group/:groupId', component: MockGroupComponent },
+          { path: 'group/:groupId/project/:projectId/job/:jobId', component: MockLogComponent }
+        ]),
         SharedModule
       ],
       providers: [
@@ -91,6 +103,14 @@ describe('AppComponent', () => {
     expect(jobBreadcrumb.replace(/\u00a0/g, ' ')).to.equal(' / rubocop');
     expect(noBreadcrumbElm).to.equal(' / Diaspora Project Site');
     expect(toolbarText).to.equal(completeWithBreadcrumbs);
+  }));
+
+  it('should have no breadcrumbs when no job or group is being visited', fakeAsync(() => {
+    zone.run(() => router.navigate(['']));
+    tick();
+    expect(location.path()).to.equal('/');
+
+    expect(fixture.debugElement.query(By.css('mat-toolbar')).nativeElement.textContent).to.equal('Pipeline Viewer');
   }));
 
 });

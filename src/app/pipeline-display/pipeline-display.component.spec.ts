@@ -1,43 +1,40 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from 'chai';
+import { ActivatedRouteMock } from '../testing/activated-route.mock';
 import { GitlabService } from '../gitlab/gitlab.service';
-import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
+import { GitlabServiceMock } from '../testing/gitlab.service.mock';
 import { PipelineDisplayComponent } from './pipeline-display.component';
-import { GitlabMocks } from '../gitlab/gitlab.mocks';
-import { of } from 'rxjs';
-
 
 describe('PipelineDisplayComponent', () => {
   let component: PipelineDisplayComponent;
   let fixture: ComponentFixture<PipelineDisplayComponent>;
   let service: GitlabService;
+  let route: ActivatedRouteMock;
   let jobs: any;
-  const activatedRouteMock = {
-    snapshot: {
-      url: ['group', '123']
-    }
-  };
   beforeEach(async(() => {
+    route = new ActivatedRouteMock();
     TestBed.configureTestingModule({
       declarations: [PipelineDisplayComponent],
       imports: [SharedModule, RouterTestingModule],
       providers: [
         { provide: GitlabService, useClass: GitlabServiceMock },
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: ComponentFixtureAutoDetect, useValue: true }
+        { provide: ActivatedRoute, useValue: route }
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    route.testParams = {
+      groupId: '1'
+    };
     fixture = TestBed.createComponent(PipelineDisplayComponent);
     service = TestBed.get(GitlabService);
     component = fixture.componentInstance;
-
     fixture.detectChanges();
   });
 
@@ -51,23 +48,29 @@ describe('PipelineDisplayComponent', () => {
     expect(jobs).to.contain('teaspoon');
   });
 
-  it('should update jobs when status changes', async () => {
-    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatus));
-    fixture = TestBed.createComponent(PipelineDisplayComponent);
-    component = fixture.componentInstance;
+  describe('when no group id is supplied', () => {
+    beforeEach(() => {
+      route.testParams = {
+        projectId: '1'
+      };
+      fixture = TestBed.createComponent(PipelineDisplayComponent);
+      fixture.detectChanges();
+    });
 
-    const [firstPipelineCheck] = await component.pipelines.toPromise();
-    expect(firstPipelineCheck.stage[0].jobs).to.have.length(2);
-    expect(firstPipelineCheck.stage[0].jobs[1].status).to.equal('running');
-    expect(firstPipelineCheck).to.equal(GitlabMocks.pipelineStatus);
+    it('should use project id when no group id is available', () => {
+      expect(component).to.be.ok;
+    });
 
-    service.getPipelineStatuses = jest.fn().mockImplementationOnce(() => of(GitlabMocks.pipelineStatusDifferentStatuses));
-    fixture = TestBed.createComponent(PipelineDisplayComponent);
-    component = fixture.componentInstance;
+    it('should populate correctly', () => {
+      const body = fixture.nativeElement.textContent;
+      const [link1, link2] = fixture.debugElement.queryAll(By.css('a'));
 
-    const [secondPipelineCheck] = await component.pipelines.toPromise();
-    expect(secondPipelineCheck.stage[0].jobs).to.have.length(2);
-    expect(secondPipelineCheck.stage[0].jobs[1].status).to.equal('passed');
-    expect(secondPipelineCheck).to.equal(GitlabMocks.pipelineStatusDifferentStatuses);
+      expect(body).to.contain('Html5 Boilerplate test');
+      expect(body).to.contain('rspec:other');
+      expect(body).to.contain('teaspoon');
+
+      expect(link1.attributes['ng-reflect-router-link']).to.equal('/project,9,job,6');
+      expect(link2.attributes['ng-reflect-router-link']).to.equal('/project,9,job,7');
+    });
   });
 });

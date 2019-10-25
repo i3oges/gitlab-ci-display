@@ -5,11 +5,20 @@
       <section *ngFor="let stage of pipeline.stage">
         {{ stage.name }}
         <ng-container *ngFor="let job of stage.jobs">
-          <a [routerLink]="['/group', groupId, 'project', pipeline.project_id, 'job', job.id]">
-            <mat-card class="job-card" [ngClass]="job.status">
-              {{ job.name }}
-            </mat-card>
-          </a>
+          <ng-container *ngIf="groupId; else nogroup">
+            <a [routerLink]="['/group', groupId, 'project', pipeline.project_id, 'job', job.id]">
+              <mat-card class="job-card" [ngClass]="job.status">
+                {{ job.name }}
+              </mat-card>
+            </a>
+          </ng-container>
+          <ng-template #nogroup>
+            <a [routerLink]="['/project', pipeline.project_id, 'job', job.id]">
+              <mat-card class="job-card" [ngClass]="job.status">
+                {{ job.name }}
+              </mat-card>
+            </a>
+          </ng-template>
         </ng-container>
       </section>
     </article>

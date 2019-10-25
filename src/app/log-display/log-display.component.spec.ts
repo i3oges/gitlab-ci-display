@@ -2,30 +2,24 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { expect } from 'chai';
+import { ActivatedRouteMock } from '../testing/activated-route.mock';
 import { GitlabService } from '../gitlab/gitlab.service';
-import { GitlabServiceMock } from '../gitlab/gitlab.service.mock';
 import { SharedModule } from '../shared/shared.module';
+import { GitlabServiceMock } from '../testing/gitlab.service.mock';
 import { LogDisplayComponent } from './log-display.component';
-import { GitlabMocks } from '../gitlab/gitlab.mocks';
-
-
 
 describe('LogDisplayComponent', () => {
   let component: LogDisplayComponent;
   let fixture: ComponentFixture<LogDisplayComponent>;
   let gitlabService: GitlabService;
-
-  const activatedRouteMock = {
-    snapshot: {
-      url: ['group', '1', 'project', '1', 'job', '4']
-    }
-  };
+  let route: ActivatedRouteMock;
   beforeEach(async(() => {
+    route = new ActivatedRouteMock();
     TestBed.configureTestingModule({
       declarations: [LogDisplayComponent],
       imports: [SharedModule],
       providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
+        { provide: ActivatedRoute, useValue: route },
         { provide: GitlabService, useClass: GitlabServiceMock }
       ]
     })
@@ -33,6 +27,10 @@ describe('LogDisplayComponent', () => {
   }));
 
   beforeEach(() => {
+    route.testParams = {
+      projectId: '1',
+      jobId: '1'
+    };
     fixture = TestBed.createComponent(LogDisplayComponent);
     gitlabService = TestBed.get(GitlabService);
     component = fixture.componentInstance;
@@ -41,21 +39,17 @@ describe('LogDisplayComponent', () => {
 
   it('should create', () => {
     expect(component).to.be.ok;
-    expect(component.projectId).to.equal(1, 'projectId should be set from url path');
-    expect(component.jobId).to.equal(4, 'jobId should be set from url path');
+    expect(component.projectId).to.equal(1, 'projectId should be set from url params');
+    expect(component.jobId).to.equal(1, 'jobId should be set from url params');
   });
 
   it('should get some info about the job', () => {
-    const jobDetailsCard = fixture.debugElement.query(By.css('.job-details')).nativeElement.textContent.trim();
-    expect(jobDetailsCard).to.equal('Test the CI integration.Administrator');
+    const job = fixture.debugElement.query(By.css('.job-details')).nativeElement.textContent.trim();
+    expect(job).to.equal('Test the CI integration.Administrator');
   });
 
-  it('should get traceFile', async () => {
-    const traceFile = await component.traceFile.toPromise();
-    const job = await component.job.toPromise();
-    const card = fixture.debugElement.query(By.css('.log-card')).nativeElement.textContent.trim();
+  it('should get traceFile', () => {
+    const traceFile = fixture.debugElement.query(By.css('.log-card')).nativeElement.textContent.trim();
     expect(traceFile).to.equal('here is some text');
-    expect(card).to.equal('here is some text');
-    expect(job).to.equal(GitlabMocks.job); // returned by ...mock.ts
   });
 });

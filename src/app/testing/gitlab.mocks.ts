@@ -216,7 +216,7 @@ export const GitlabMocks = {
       updated_at: '2016-08-12T10:09:56.223Z',
     }
   ],
-  pipelineStatus: {
+  pipelineStatus: [{
     id: 47,
     project_id: 9,
     project_name: 'Html5 Boilerplate',
@@ -340,7 +340,7 @@ export const GitlabMocks = {
     web_url: 'https://example.com/foo/bar/pipelines/47',
     created_at: '2016-08-11T11:28:34.085Z',
     updated_at: '2016-08-11T11:32:35.169Z'
-  },
+  }],
   traceFile: 'here is some text',
   job: {
     commit: {
@@ -392,7 +392,7 @@ export const GitlabMocks = {
       organization: ''
     }
   },
-  pipelineStatusDifferentStatuses: {
+  pipelineStatusDifferentStatuses: [{
     ...this.pipelineStatus,
     stage: [{
       name: 'test',
@@ -506,7 +506,7 @@ export const GitlabMocks = {
         }
       }]
     }]
-  },
+  }],
   project: {
     id: 3,
     description: null,
@@ -616,5 +616,27 @@ export const GitlabMocks = {
       events: 'http://example.com/api/v4/projects/1/events',
       members: 'http://example.com/api/v4/projects/1/members'
     }
-  }
+  },
+  projects: [{
+    id: 9,
+    description: null,
+    default_branch: 'master',
+    ssh_url_to_repo: 'git@example.com:diaspora/diaspora-client.git',
+    http_url_to_repo: 'http://example.com/diaspora/diaspora-client.git',
+    web_url: 'http://example.com/diaspora/diaspora-client',
+    readme_url: 'http://example.com/diaspora/diaspora-client/blob/master/README.md',
+    tag_list: [
+      'example',
+      'disapora client'
+    ],
+    name: 'Diaspora Client',
+    name_with_namespace: 'Diaspora / Diaspora Client',
+    path: 'diaspora-client',
+    path_with_namespace: 'diaspora/diaspora-client',
+    created_at: '2013-09-30T13:46:02Z',
+    last_activity_at: '2013-09-30T13:46:02Z',
+    forks_count: 0,
+    avatar_url: 'http://example.com/uploads/project/avatar/4/uploads/avatar.png',
+    star_count: 0,
+  }]
 };
