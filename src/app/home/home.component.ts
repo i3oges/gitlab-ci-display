@@ -11,10 +11,12 @@ import { GitlabService } from '../gitlab/gitlab.service';
 })
 export class HomeComponent {
   groups = this.gs.getGroups().pipe(
-    mergeMap(groups => iif(() => groups.length === 0,
-      from(this.route.navigateByUrl('/projects')),
-      of(groups)
-    ))
+    mergeMap(groups => {
+      if (groups.length > 0) {
+        return of(groups);
+      }
+      return this.route.navigateByUrl('/projects');
+    })
   );
   constructor(private gs: GitlabService, private route: Router) { }
 }
